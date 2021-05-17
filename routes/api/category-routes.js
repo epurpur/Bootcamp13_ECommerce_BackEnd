@@ -44,6 +44,7 @@ router.get('/category/:category_name', async (req, res) => {
   try {
     const categoryData = await Category.findAll({
       where: {category_name: req.params.category_name},
+      // JOIN with Product
       include: [ {model: Product} ]
     })
     .then((result) => {
@@ -70,14 +71,14 @@ router.post('/', async (req, res) => {
 // PUT - update a category by its `id` value
 router.put('/:id', async (req, res) => {
   try {
-    const result = await Project.update(
-      {category_name: 'Socks'},
-      { where: {id: 1} }
+    const categoryData = await Category.update(
+      { category_name: 'beer' },
+      { where: {id: req.params.id} }
     )
     .then((result) => {
       console.log(`Updating: ${result}`);
       res.status(200).json(result);
-    })
+    });
   } catch (err) {
     res.status(400).json(err);
   }
