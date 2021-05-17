@@ -30,16 +30,17 @@ router.get('/:id', async (req, res) => {
       //JOIN with Products
       include: [ {model: Product} ]
     })
-    .then((result) => {
-      res.status(200).json(result);
-    });
+    // .then((result) => {
+    //   res.status(200).json(result);
+    // });
 
-    // WHY DOESN'T THIS WORK?
     console.log(categoryData);
     if (!categoryData) {
       res.status(404).json({ message: 'No category found with this id!' });
-      return;
+    } else {
+      res.status(200).json(result);
     }
+
 
   } catch (err) {
     console.log(err);
