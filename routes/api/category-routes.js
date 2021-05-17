@@ -74,6 +74,10 @@ router.put('/:id', async (req, res) => {
       {category_name: 'Socks'},
       { where: {id: 1} }
     )
+    .then((result) => {
+      console.log(`Updating: ${result}`);
+      res.status(200).json(result);
+    })
   } catch (err) {
     res.status(400).json(err);
   }
