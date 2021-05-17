@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { Category, Product } = require('../../models');
+const { restore } = require('../../models/Product');
 // const { update } = require('../../models/Product');
 
 // The `/api/categories` endpoint
@@ -30,17 +31,12 @@ router.get('/:id', async (req, res) => {
       //JOIN with Products
       include: [ {model: Product} ]
     })
-    // .then((result) => {
-    //   res.status(200).json(result);
-    // });
 
-    console.log(categoryData);
     if (!categoryData) {
       res.status(404).json({ message: 'No category found with this id!' });
     } else {
-      res.status(200).json(result);
+      res.status(200).json(categoryData);
     }
-
 
   } catch (err) {
     console.log(err);
@@ -57,9 +53,12 @@ router.get('/category/:category_name', async (req, res) => {
       // JOIN with Product
       include: [ {model: Product} ]
     })
-    .then((result) => {
-      res.status(200).json(result);
-    });
+
+    if (categoryData.length == 0) {
+      res.status(404).json({ message: 'No category found with this id!' });
+    } else {
+      res.status(200).json(categoryData);
+    }
 
   } catch (err) {
     res.status(500).json(err)
