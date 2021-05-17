@@ -1,7 +1,5 @@
 const router = require('express').Router();
 const { Category, Product } = require('../../models');
-const { restore } = require('../../models/Product');
-// const { update } = require('../../models/Product');
 
 // The `/api/categories` endpoint
 
@@ -70,6 +68,9 @@ router.get('/category/:category_name', async (req, res) => {
 router.post('/', async (req, res) => {
   try {
     const categoryData = await Category.create(req.body)
+
+    console.log(`\n Adding new category: ${req.body.category_name} \n`);
+
     res.status(200).json(categoryData)
 
   } catch (err) {
@@ -108,6 +109,8 @@ router.delete('/:id', async (req, res) => {
     if (!categoryData) {
       res.status(404).json({message: 'No category found with this id!'});
       return;
+    } else {
+      console.log(`\n Deleting category with id: ${req.params.id} \n`)
     }
 
     res.status(200).json(categoryData);
