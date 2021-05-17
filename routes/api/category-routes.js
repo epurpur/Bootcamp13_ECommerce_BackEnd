@@ -35,6 +35,7 @@ router.get('/:id', async (req, res) => {
     });
 
     // WHY DOESN'T THIS WORK?
+    console.log(categoryData);
     if (!categoryData) {
       res.status(404).json({ message: 'No category found with this id!' });
       return;
