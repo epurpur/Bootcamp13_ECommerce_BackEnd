@@ -62,28 +62,31 @@ router.get('/solo/:id', async (req, res) => {
 router.post('/',  (req, res) => {
   /* req.body should look like this...
     {
-      product_name: "Basketball",
-      price: 20.00,
-      stock: 3,
-      tagIds: [1, 2, 3, 4]
+      "product_name": "Basketball",
+      "price": 20.00,
+      "stock": 3,
+      "tagIds": [1, 2, 3, 4]
     }
   */
     
-  console.log(`\n ${req.body.tagIds} \n`);
-  console.log(`\n ${req.body} \n`)
-
   Product.create(req.body)
     .then((product) => {
+
+      console.log(req.body)
+      console.log(`\n Adding new product: ${req.body.product_name}, price: $${req.body.price}, stock: ${req.body.stock} \n`);
+
       // if there's product tags, we need to create pairings to bulk create in the ProductTag model
-      // if (req.body.tagIds.length) {
-      //   const productTagIdArr = req.body.tagIds.map((tag_id) => {
-      //     return {
-      //       product_id: product.id,
-      //       tag_id,
-      //     };
-        // });
-      //   return ProductTag.bulkCreate(productTagIdArr);
-      // }
+      if (req.body.tagIds.length > 0) {
+        const productTagIdArr = req.body.tagIds.map((tag_id) => {
+          return {
+            product_id: product.id,
+            tag_id,
+          };
+        });
+        return ProductTag.bulkCreate(productTagIdArr);
+      } else {
+        console.log('\n No tags! \n')
+      }
       // if no product tags, just respond
       res.status(200).json(product);
     })
@@ -93,6 +96,7 @@ router.post('/',  (req, res) => {
       res.status(400).json(err);
     });
 });
+
 
 // update product
 router.put('/:id', (req, res) => {
