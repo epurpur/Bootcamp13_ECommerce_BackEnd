@@ -84,9 +84,8 @@ router.post('/',  (req, res) => {
           };
         });
         return ProductTag.bulkCreate(productTagIdArr);
-      } else {
-        console.log('\n No tags! \n')
       }
+      
       // if no product tags, just respond
       res.status(200).json(product);
     })
