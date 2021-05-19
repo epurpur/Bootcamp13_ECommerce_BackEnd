@@ -12,11 +12,6 @@ router.get('/', async (req, res) => {
     })
     res.status(200).json(categoriesData);
 
-    // .then((result) => {
-    //   //return JSON response of result
-    //   res.status(200).json(result);
-    // });
-
   } catch (err) {
     //console log error if status = 500
     res.status(500).json(err);
@@ -54,7 +49,7 @@ router.get('/category/:category_name', async (req, res) => {
     })
 
     if (categoryData.length == 0) {
-      res.status(404).json({ message: 'No category found with this id!' });
+      res.status(404).json({ message: 'No category found with this category_name!' });
     } else {
       res.status(200).json(categoryData);
     }
