@@ -44,8 +44,22 @@ router.post('/', (req, res) => {
   // create a new tag
 });
 
-router.put('/:id', (req, res) => {
-  // update a tag's name by its `id` value
+
+// PUT - Update prduct tag name by its 'id' value
+router.put('/:id', async (req, res) => {
+
+  //update tag data
+  Tag.update(req.body, {
+    where: {
+      id: req.params.id,
+    },
+  })
+  .then((tag) => {
+    res.status(200).json(tag);
+  })
+  .catch((err) => {
+    res.status(500).json(err);
+  })
 });
 
 // DELETE - one tag by its 'id' value
