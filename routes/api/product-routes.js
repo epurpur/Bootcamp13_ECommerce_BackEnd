@@ -6,6 +6,8 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 // GET - all products
 router.get('/', async (req, res) => {
   try {
+    console.log(`\n Getting all Product data \n`)
+
     const productData = await Product.findAll({
       //JOIN with Category, Tag through ProductTag
       include: [ { model: Category },
@@ -20,9 +22,12 @@ router.get('/', async (req, res) => {
   }
 });
 
+
 // GET - one product by its 'id' value
 router.get('/:id', async (req, res) => {
   try {
+    console.log(`\n Getting Product data for id: ${req.params.id} \n`);
+
     const productData = await Product.findByPk(req.params.id, {
       //JOIN with Category, Tag through ProductTag
       include: [ { model: Category },
@@ -44,6 +49,8 @@ router.get('/:id', async (req, res) => {
 // GET - one product by its 'id' value with no other associated data
 router.get('/solo/:id', async (req, res) => {
   try {
+    console.log(`\n Getting Product data for id: ${req.params.id} (no other associated data) \n`);
+
     const productData = await Product.findByPk(req.params.id);
 
     if (!productData) {
@@ -53,7 +60,7 @@ router.get('/solo/:id', async (req, res) => {
     }
 
   } catch (err) {
-    res.status(500).json(err)
+    res.status(500).json(err);
   }
 });
 
@@ -99,6 +106,8 @@ router.post('/',  (req, res) => {
 
 // PUT - Update product tags
 router.put('/:id', (req, res) => {
+
+  console.log(`\n Updating product with id: ${req.params.id} \n`);
 
   // update product data
   Product.update(req.body, {
