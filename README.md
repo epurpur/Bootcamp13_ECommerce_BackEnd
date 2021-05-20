@@ -28,7 +28,11 @@
 
     npm i
 
-  ## Usage
+  To seed MySQL database with seed data, navigate to the root directory of this repository and run the following command:
+  
+    node seeds/index.js
+ 
+ ## Usage
 
   
 
