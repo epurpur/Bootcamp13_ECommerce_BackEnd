@@ -19,5 +19,3 @@ app.use(routes);
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log(`App now running on port ${PORT}`));
 });
-
-
